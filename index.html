@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,50 +9,93 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f0f0f0;
+            background-color: #121212;
+            color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         .container {
             margin: 50px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            background-color: #1f1f1f;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
+
         h1 {
-            color: #333;
+            color: #80aaff; /* Nuevo color para el título */
+            font-size: 3rem;
+            margin-bottom: 40px;
         }
+
         .variable {
-            margin: 20px 0;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #2c2c2c;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
         }
+
+        .variable:hover {
+            background-color: #3a3a3a;
+        }
+
         .variable span {
             display: block;
-            font-size: 24px;
+            font-size: 36px;
             font-weight: bold;
+            color: #f8f9fa;
+        }
+
+        .label {
+            color: #adb5bd;
+            font-size: 20px;
             margin-top: 10px;
         }
-        .label {
-            color: #555;
-            font-size: 18px;
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #6c757d;
+            padding: 20px 0;
+        }
+
+        .variable span::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #00d1b2;
+            margin: 10px auto 0;
+        }
+
+        .variable:nth-child(2n) span::after {
+            background-color: #ff3860;
+        }
+
+        .variable:nth-child(3n) span::after {
+            background-color: #3273dc;
         }
     </style>
 </head>
+
 <body>
     <div class="container text-center">
         <h1>Monitor de Variables</h1>
-        
+
         <div class="variable">
             <span id="TemperaturaId">--</span>
-            <div class="label">Temperatura (°C)</div>
+            <div class="label">Temperatura</div>
         </div>
-        
+
         <div class="variable">
             <span id="AltId">--</span>
-            <div class="label">Altitud (m)</div>
+            <div class="label">Altitud</div>
         </div>
 
         <div class="variable">
             <span id="PresionId">--</span>
-            <div class="label">Presión (mmHg)</div>
+            <div class="label">Presión</div>
         </div>
     </div>
 
@@ -60,7 +104,7 @@
     <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Your custom IoT application JS -->
     <script src="js/IoTAPP.js"></script>
 
@@ -84,23 +128,23 @@
         const altRef = db.ref("AltId");
         const presRef = db.ref("PresionId");
 
-        // Function to update values
+        // Function to update values and limit to 2 decimals
         function actualizarVariables() {
             // Listen for temperature changes
             tempRef.on('value', (snapshot) => {
-                const temperatura = snapshot.val();
+                const temperatura = parseFloat(snapshot.val()).toFixed(2);
                 document.getElementById('TemperaturaId').innerText = temperatura + " °C";
             });
 
             // Listen for altitude changes
             altRef.on('value', (snapshot) => {
-                const altitud = snapshot.val();
+                const altitud = parseFloat(snapshot.val()).toFixed(2);
                 document.getElementById('AltId').innerText = altitud + " m";
             });
 
             // Listen for pressure changes
             presRef.on('value', (snapshot) => {
-                const presion = snapshot.val();
+                const presion = parseFloat(snapshot.val()).toFixed(2);
                 document.getElementById('PresionId').innerText = presion + " mmHg";
             });
         }
@@ -108,11 +152,10 @@
         // Call the function to update the variables
         actualizarVariables();
     </script>
+
+    <footer>
+        Created by Jeremy Faryd Cortes Muñoz 1910064 &middot; 2024
+    </footer>
 </body>
 
-<footer class="pt-5 my-5 text-muted border-top">
-    Created by Jeremy Faryd Cortes Muñoz 1910064 &middot; &copy; 2024
-</footer>
-
 </html>
-
