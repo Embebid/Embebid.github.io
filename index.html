@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medición de Variables</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .variable {
+            margin: 20px 0;
+        }
+        .variable span {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .label {
+            color: #555;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Monitor de Variables</h1>
+        
+        <div class="variable">
+            <span id="TemperaturaId">--</span>
+            <div class="label">Temperatura (°C)</div>
+        </div>
+        
+        <div class="variable">
+            <span id="AltId">--</span>
+            <div class="label">Altitud (m)</div>
+        </div>
+
+        <div class="variable">
+            <span id="PresionId">--</span>
+            <div class="label">Presión (mmHg)</div>
+        </div>
+    </div>
+
+    <!-- Firebase and jQuery -->
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+    <!-- Your custom IoT application JS -->
+    <script src="js/IoTAPP.js"></script>
+
+    <script>
+        // Firebase configuration (replace with your own credentials)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // Firebase references
+        const db = firebase.database();
+        const tempRef = db.ref("TemperaturaId");
+        const altRef = db.ref("AltId");
+        const presRef = db.ref("PresionId");
+
+        // Function to update values
+        function actualizarVariables() {
+            // Listen for temperature changes
+            tempRef.on('value', (snapshot) => {
+                const temperatura = snapshot.val();
+                document.getElementById('TemperaturaId').innerText = temperatura + " °C";
+            });
+
+            // Listen for altitude changes
+            altRef.on('value', (snapshot) => {
+                const altitud = snapshot.val();
+                document.getElementById('AltId').innerText = altitud + " m";
+            });
+
+            // Listen for pressure changes
+            presRef.on('value', (snapshot) => {
+                const presion = snapshot.val();
+                document.getElementById('PresionId').innerText = presion + " mmHg";
+            });
+        }
+
+        // Call the function to update the variables
+        actualizarVariables();
+    </script>
+</body>
+</html>
