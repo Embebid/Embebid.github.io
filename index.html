@@ -23,7 +23,7 @@
         }
 
         h1 {
-            color: #80aaff; /* Nuevo color para el título */
+            color: #80aaff;
             font-size: 3rem;
             margin-bottom: 40px;
         }
@@ -33,11 +33,21 @@
             padding: 20px;
             background-color: #2c2c2c;
             border-radius: 8px;
-            transition: background-color 0.3s ease;
+            border: 2px solid transparent;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .variable:hover {
             background-color: #3a3a3a;
+            border-color: #80aaff; /* Color del borde al pasar el cursor */
+        }
+
+        .variable:nth-child(2n):hover {
+            border-color: #ff3860; /* Color del borde para la segunda variable */
+        }
+
+        .variable:nth-child(3n):hover {
+            border-color: #3273dc; /* Color del borde para la tercera variable */
         }
 
         .variable span {
