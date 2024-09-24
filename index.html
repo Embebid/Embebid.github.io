@@ -23,31 +23,41 @@
         }
 
         h1 {
-            color: #ffffff; /* Color del título - Rosa claro */
+            color: #ffffff;
             font-size: 3rem;
             margin-bottom: 40px;
         }
 
+        /* Flexbox para disposición horizontal */
+        .variables-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
         .variable {
-            margin: 30px 0;
+            margin: 20px;
             padding: 20px;
             background-color: #2e2e2e;
             border-radius: 8px;
             border: 2px solid transparent;
             transition: background-color 0.3s ease, border-color 0.3s ease;
+            width: 30%; /* Ajusta según el tamaño deseado */
+            text-align: center;
         }
 
         .variable:hover {
             background-color: #3a3a3a;
-            border-color: #6f42c1; /* Color del borde al pasar el cursor para la primera variable */
+            border-color: #6f42c1;
         }
 
         .variable:nth-child(2n):hover {
-            border-color: #03b0f5; /* Color del borde para la segunda variable - Verde claro */
+            border-color: #03b0f5;
         }
 
         .variable:nth-child(3n):hover {
-            border-color: #05eff7; /* Color del borde para la tercera variable - Azul claro */
+            border-color: #05eff7;
         }
 
         .variable span {
@@ -75,16 +85,22 @@
             display: block;
             width: 80px;
             height: 3px;
-            background-color: #6f42c1; /* Barra rosa claro para la primera variable */
+            background-color: #6f42c1;
             margin: 10px auto 0;
         }
 
         .variable:nth-child(2n) span::after {
-            background-color: #03b0f5; /* Barra verde claro para la segunda variable */
+            background-color: #03b0f5;
         }
 
         .variable:nth-child(3n) span::after {
-            background-color:  #05eff7; /* Barra azul claro para la tercera variable */
+            background-color: #05eff7;
+        }
+
+        @media (max-width: 768px) {
+            .variable {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -93,19 +109,22 @@
     <div class="container text-center">
         <h1>Monitor de Variables</h1>
 
-        <div class="variable">
-            <span id="TemperaturaId">--</span>
-            <div class="label">Temperatura</div>
-        </div>
+        <!-- Contenedor para las variables en formato horizontal -->
+        <div class="variables-container">
+            <div class="variable">
+                <span id="TemperaturaId">--</span>
+                <div class="label">Temperatura</div>
+            </div>
 
-        <div class="variable">
-            <span id="AltId">--</span>
-            <div class="label">Altitud</div>
-        </div>
+            <div class="variable">
+                <span id="AltId">--</span>
+                <div class="label">Altitud</div>
+            </div>
 
-        <div class="variable">
-            <span id="PresionId">--</span>
-            <div class="label">Presión</div>
+            <div class="variable">
+                <span id="PresionId">--</span>
+                <div class="label">Presión</div>
+            </div>
         </div>
     </div>
 
@@ -117,10 +136,6 @@
 
     <!-- Your custom IoT application JS -->
     <script src="js/IoTAPP.js"></script>
-
-    
-
-        
 
     <footer>
         Created by Jeremy Faryd Cortes Muñoz 1910064 &middot; 2024
