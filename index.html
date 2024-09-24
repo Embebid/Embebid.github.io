@@ -28,12 +28,12 @@
             margin-bottom: 40px;
         }
 
-        /* Flexbox para disposición horizontal */
+        /* Flexbox para disposición horizontal, sin que se envuelvan las tarjetas */
         .variables-container {
             display: flex;
             justify-content: space-around;
             align-items: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* Evita que las tarjetas se envuelvan a una nueva línea */
         }
 
         .variable {
@@ -97,7 +97,11 @@
             background-color: #05eff7;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
+            .variables-container {
+                flex-direction: column; /* En pantallas pequeñas, las tarjetas se apilarán verticalmente */
+            }
+
             .variable {
                 width: 100%;
             }
