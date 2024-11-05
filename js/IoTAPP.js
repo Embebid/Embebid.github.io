@@ -1,4 +1,4 @@
-const firebaseConfig = {
+/* const firebaseConfig = {
   apiKey: "AIzaSyDDP042IpeYQoYnRTzrVWJfL8dNDyTAMNQ",
   authDomain: "esp32iot-7efe3.firebaseapp.com",
   databaseURL: "https://esp32iot-7efe3-default-rtdb.firebaseio.com",
@@ -53,3 +53,38 @@ dbTemp.on('value', function(snapshot) {
     console.log("No se recibió ningún valor para la temperatura");
   }
 });
+*/
+
+//js para control de modo de luces 
+// Configuración de Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDDP042IpeYQoYnRTzrVWJfL8dNDyTAMNQ",
+    authDomain: "esp32iot-7efe3.firebaseapp.com",
+    databaseURL: "https://esp32iot-7efe3-default-rtdb.firebaseio.com",
+    projectId: "esp32iot-7efe3",
+    storageBucket: "esp32iot-7efe3.appspot.com",
+    messagingSenderId: "625023662600",
+    appId: "1:625023662600:web:22505ab754fc68e3d4afbd"
+};
+
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Función para enviar el valor a Firebase
+function sendToFirebase() {
+    const modeValue = document.getElementById('fbmodeValue').value;
+
+    // Validación para asegurarse de que el valor está entre 1 y 5
+    if (modeValue >= 1 && modeValue <= 5) {
+        firebase.database().ref("ESP32IoTApp/fbmode").set(Number(modeValue))
+            .then(() => {
+                alert(`Modo ${modeValue} ha sido enviado exitosamente.`);
+            })
+            .catch((error) => {
+                console.error("Error al enviar a Firebase: ", error);
+            });
+    } else {
+        alert("Por favor, introduce un valor entre 1 y 5.");
+    }
+}
+
