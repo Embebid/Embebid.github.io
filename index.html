@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+   <!-- <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitor de Variables</title>
-    <!-- Bootstrap CSS -->
+   
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -113,7 +113,7 @@
     <div class="container text-center">
         <h1>Monitor de Variables</h1>
 
-        <!-- Contenedor para las variables en formato horizontal -->
+     
         <div class="variables-container">
             <div class="variable">
                 <span id="TemperaturaId">--</span>
@@ -132,13 +132,13 @@
         </div>
     </div>
 
-    <!-- Firebase and jQuery -->
+  
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Your custom IoT application JS -->
+  
     <script src="js/IoTAPP.js"></script>
 
     <footer>
@@ -147,3 +147,114 @@
 </body>
 
 </html>
+
+
+ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Modos</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 40px;
+            background-color: #1f1f1f;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid #6f42c1;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            background-color: #6f42c1;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #5a32a1;
+        }
+
+        .description {
+            margin-top: 20px;
+            color: #ffffff;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #6c757d;
+            padding: 20px 0;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Selección de Modos</h2>
+        
+        <!-- Selector para el modo -->
+        <select id="fbmodeValue">
+            <option value="">Selecciona tu modo</option>
+            <option value="1">Modo 1</option>
+            <option value="2">Modo 2</option>
+            <option value="3">Modo 3</option>
+            <option value="4">Modo 4</option>
+            <option value="5">Modo 5</option>
+        </select>
+        <button onclick="sendToFirebase()">Enviar</button>
+
+        <!-- Descripción de los modos -->
+        <div class="description">
+            <p><strong>Modo 1:</strong> luces rítmicas con sonido de fondo</p>
+            <p><strong>Modo 2:</strong> detección de movimiento con tonos aleatorios</p>
+            <p><strong>Modo 3:</strong> show de luces con sonido de fondo</p>
+            <p><strong>Modo 4:</strong> luces rítmicas con cambio de luz dependiendo de la frecuencia de sonido: azul baja, verde media, roja alta</p>
+            <p><strong>Modo 5:</strong> luces rítmicas</p>
+        </div>
+    </div>
+
+    <!-- Cargar el archivo JavaScript externo -->
+    <script src="js/IoTAPP.js"></script>
+
+    <footer>
+        Created by Gerardo González Moyeda 1896771 & Jeremy Faryd Cortes Muñoz 1910064 &middot; 2024
+    </footer>
+</body>
+</html>
+
+
+
