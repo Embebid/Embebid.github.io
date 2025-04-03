@@ -150,13 +150,15 @@
 
 
  -->
+
+   <!--
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selección de Modos</title>
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -226,7 +228,7 @@
     <div class="container">
         <h2>Selección de Modos</h2>
         
-        <!-- Selector para el modo -->
+        <!-- Selector para el modo 
         <select id="fbmodeValue">
             <option value="">Selecciona tu modo</option>
             <option value="1">Modo 1</option>
@@ -237,7 +239,7 @@
         </select>
         <button onclick="sendToFirebase()">Enviar</button>
 
-        <!-- Descripción de los modos -->
+        <!-- Descripción de los modos -
         <div class="description">
             <p><strong>Modo 1:</strong> luces rítmicas con sonido de fondo</p>
             <p><strong>Modo 2:</strong> detección de movimiento con tonos aleatorios</p>
@@ -247,7 +249,7 @@
         </div>
     </div>
 
-    <!-- Cargar el archivo JavaScript externo -->
+    <!-- Cargar el archivo JavaScript externo 
     <script src="js/IoTAPP.js"></script>
 
     <footer>
@@ -255,6 +257,161 @@
     </footer>
 </body>
 </html>
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Encendido</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 40px;
+            background-color: #1f1f1f;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        h2 {
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background-color: #6f42c1;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #5a32a1;
+        }
+
+        .battery-container {
+            margin: 0 auto 30px;
+            width: 180px;
+            height: 80px;
+            background-color: #333;
+            border-radius: 10px;
+            position: relative;
+            border: 3px solid #555;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            overflow: hidden;
+            transform: rotate(0deg);
+        }
+
+        .battery-tip {
+            width: 10px;
+            height: 30px;
+            background-color: #555;
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 3px;
+        }
+
+        .battery-level {
+            height: 100%;
+            background-color: #28a745;
+            transition: width 0.5s;
+        }
+
+        .battery-text {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #f8f9fa;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #6c757d;
+            padding: 20px 0;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Control de Encendido</h2>
+        
+        <div class="battery-container">
+            <div id="batteryLevel" class="battery-level"></div>
+            <div class="battery-tip"></div>
+        </div>
+        <div id="batteryText" class="battery-text">Cargando...</div>
+
+        <button id="toggleButton" onclick="togglePower()">Encender</button>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDDP042IpeYQoYnRTzrVWJfL8dNDyTAMNQ",
+            authDomain: "esp32iot-7efe3.firebaseapp.com",
+            databaseURL: "https://esp32iot-7efe3-default-rtdb.firebaseio.com",
+            projectId: "esp32iot-7efe3",
+            storageBucket: "esp32iot-7efe3.appspot.com",
+            messagingSenderId: "625023662600",
+            appId: "1:625023662600:web:22505ab754fc68e3d4afbd"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const dbRef = firebase.database().ref("Dron/Vuelo");
+        const pilaRef = firebase.database().ref("Dron/Pila");
+
+        let isOn = false;
+
+        function togglePower() {
+            isOn = !isOn;
+            dbRef.set(isOn ? 1 : 0)
+                .then(() => {
+                    document.getElementById("toggleButton").textContent = isOn ? "Apagar" : "Encender";
+                })
+                .catch(error => console.error("Error al enviar a Firebase: ", error));
+        }
+
+        function updateBatteryLevel(voltage) {
+            const minVoltage = 0;
+            const maxVoltage = 3.25;
+            let percentage = ((voltage - minVoltage) / (maxVoltage - minVoltage)) * 100;
+            percentage = Math.max(0, Math.min(100, percentage));
+            document.getElementById("batteryLevel").style.width = percentage + "%";
+            document.getElementById("batteryText").textContent = `Batería: ${percentage.toFixed(1)}% (${voltage.toFixed(2)}V)`;
+        }
+
+        pilaRef.on("value", snapshot => {
+            const voltage = snapshot.val();
+            if (voltage !== null) {
+                updateBatteryLevel(voltage);
+            }
+        }, error => console.error("Error al obtener datos de Firebase: ", error));
+    </script>
+
+    <footer>
+        Created by Jeremy Faryd Cortes Muñoz 1910064 &middot; 2024
+    </footer>
+</body>
+</html>
+
 
 
 
